@@ -34,7 +34,9 @@ public class HomeController {
     }
 
     @GetMapping("/product/{slug}-{id}")
-    public String productDetail(@PathVariable Long id, Model model) {
+    public String productDetail(@PathVariable String slug,
+                                @PathVariable Long id,
+                                Model model) {
 
         Product product = repository.findById(id).orElse(null);
 
