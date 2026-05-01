@@ -26,11 +26,16 @@ public class HomeController {
 
         Page<Product> productPage = repository.findAll(PageRequest.of(page, 8));
 
+        productPage.getContent().forEach(p ->
+                p.setSlug(toSlug(p.getName()))
+        );
+
         model.addAttribute("products", productPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
 
         return "index";
+
     }
 
     @GetMapping("/product/{slug}-{id}")
@@ -69,6 +74,19 @@ public class HomeController {
     @GetMapping("/posts")
     public String posts(){
         return "posts";
+    }
+
+    public String toSlug(String input) {
+        return input.toLowerCase()
+                .replaceAll("[àáạảãâầấậẩẫăằắặẳẵ]", "a")
+                .replaceAll("[èéẹẻẽêềếệểễ]", "e")
+                .replaceAll("[ìíịỉĩ]", "i")
+                .replaceAll("[òóọỏõôồốộổỗơờớợởỡ]", "o")
+                .replaceAll("[ùúụủũưừứựửữ]", "u")
+                .replaceAll("[ỳýỵỷỹ]", "y")
+                .replaceAll("đ", "d")
+                .replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("^-|-$", "");
     }
 
 }

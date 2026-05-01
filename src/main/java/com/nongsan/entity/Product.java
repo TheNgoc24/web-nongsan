@@ -13,6 +13,7 @@ public class Product {
     private double price;
     private String description;
     private String image;
+    private String slug;
 
     public Product() {}
 
@@ -33,4 +34,12 @@ public class Product {
     public String getImage() { return image; }
 
     public void setImage(String image) { this.image = image; }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 }
