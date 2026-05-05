@@ -26,9 +26,10 @@ public class HomeController {
 
         Page<Product> productPage = repository.findAll(PageRequest.of(page, 8));
 
-        productPage.getContent().forEach(p ->
-                p.setSlug(toSlug(p.getName()))
-        );
+        productPage.getContent().forEach(p -> {
+            p.setSlug(toSlug(p.getName()));
+            repository.save(p);
+        });
 
         model.addAttribute("products", productPage.getContent());
         model.addAttribute("currentPage", page);
@@ -38,12 +39,14 @@ public class HomeController {
 
     }
 
-    @GetMapping("/product/{slug}-{id}")
-    public String productDetail(@PathVariable String slug,
-                                @PathVariable Long id,
-                                Model model) {
+    @GetMapping("/product/{slug}")
+    public String productDetail(@PathVariable String slug, Model model) {
 
-        Product product = repository.findById(id).orElse(null);
+        Product product = repository.findBySlug(slug);
+
+        if(product == null){
+            return "redirect:/";
+        }
 
         model.addAttribute("product", product);
 
