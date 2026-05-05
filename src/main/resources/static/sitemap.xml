@@ -3,22 +3,18 @@
 
     <url>
         <loc>https://web-nongsan-production.up.railway.app/</loc>
-        <priority>1.0</priority>
     </url>
 
     <url>
         <loc>https://web-nongsan-production.up.railway.app/category</loc>
-        <priority>0.8</priority>
     </url>
 
     <url>
-        <loc>https://web-nongsan-production.up.railway.app/product/2</loc>
-        <priority>0.9</priority>
+        <loc>https://web-nongsan-production.up.railway.app/product/mang-cut</loc>
     </url>
 
     <url>
-        <loc>https://web-nongsan-production.up.railway.app/product/3</loc>
-        <priority>0.9</priority>
+        <loc>https://web-nongsan-production.up.railway.app/product/xoai</loc>
     </url>
 
 </urlset>
