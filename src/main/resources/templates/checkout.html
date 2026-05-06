@@ -68,8 +68,8 @@
 
                 <div th:each="item : ${cart}" class="product-item">
 
-                    <img th:src="${product.image}"
-                         th:alt="${product.name}"
+                    <img th:src="${item.product.image}"
+                         th:alt="${item.product.name}"
                          class="img-fluid rounded shadow mb-3"/>
 
 

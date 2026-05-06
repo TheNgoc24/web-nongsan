@@ -9,11 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -57,23 +53,18 @@ public class AdminController {
             @RequestParam String name,
             @RequestParam double price,
             @RequestParam String description,
-            @RequestParam("image") MultipartFile file
-    ) throws Exception{
-
-        String fileName = file.getOriginalFilename();
-
-        Path path = Paths.get("src/main/resources/static/images/" + fileName);
-
-        Files.write(path, file.getBytes());
+            @RequestParam String image
+    ){
 
         Product product = new Product();
+
         product.setName(name);
         product.setPrice(price);
         product.setDescription(description);
-        product.setImage(fileName);
+
+        product.setImage(image);
 
         repository.save(product);
-
 
         return "redirect:/admin";
     }
@@ -101,21 +92,10 @@ public class AdminController {
     }
 
     @PostMapping("/update-product")
-    public String update(Product product,
-                         @RequestParam("imageFile") MultipartFile file){
-
-        if(!file.isEmpty()){
-            try{
-                String fileName = file.getOriginalFilename();
-                Path path = Paths.get("src/main/resources/static/images/" + fileName);
-                Files.write(path, file.getBytes());
-                product.setImage(fileName);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
+    public String update(Product product){
 
         repository.save(product);
+
         return "redirect:/admin";
     }
 

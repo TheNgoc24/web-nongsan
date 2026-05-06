@@ -54,7 +54,10 @@
 
       <textarea name="description" class="form-control mb-2" placeholder="Mô tả"></textarea>
 
-      <input type="file" name="image" class="form-control mb-2">
+      <input type="text"
+             name="image"
+             class="form-control"
+             placeholder="Link ảnh online">
 
       <button class="btn btn-success w-100">Lưu sản phẩm</button>
 
@@ -91,7 +94,7 @@
           <td th:text="${p.id}"></td>
 
           <td>
-            <img th:src="@{/images/{img}(img=${p.image})}"
+            <img th:src="${p.image}"
                  width="60" height="60" style="object-fit:cover;">
           </td>
 

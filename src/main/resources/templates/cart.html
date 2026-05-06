@@ -81,7 +81,6 @@
     </thead>
 
     <tbody>
-
     <div class="row">
 
         <!-- DANH SÁCH -->
@@ -96,7 +95,7 @@
 
                 <div th:each="item : ${cart}" class="cart-item">
 
-                    <img th:src="@{/images/{img}(img=${item.product.image})}">
+                    <img th:src="${item.product.image}">
 
                     <div class="flex-grow-1">
                         <h5 th:text="${item.product.name}"></h5>
@@ -161,51 +160,51 @@
     </div>
 
 
-<script>
-    function increase(id){
-        fetch("/cart/increase", {
-            method: "POST",
-            headers: {
-                "Content-Type":"application/x-www-form-urlencoded"
-            },
-            body: "id=" + id
-        })
-            .then(res => res.text())
-            .then(total => {
-                document.getElementById("total").innerText = total;
-                location.reload();
-            });
-    }
+    <script>
+        function increase(id){
+            fetch("/cart/increase", {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/x-www-form-urlencoded"
+                },
+                body: "id=" + id
+            })
+                .then(res => res.text())
+                .then(total => {
+                    document.getElementById("total").innerText = total;
+                    location.reload();
+                });
+        }
 
-    function decrease(id){
-        fetch("/cart/decrease", {
-            method: "POST",
-            headers: {
-                "Content-Type":"application/x-www-form-urlencoded"
-            },
-            body: "id=" + id
-        })
-            .then(res => res.text())
-            .then(total => {
-                document.getElementById("total").innerText = total;
-                location.reload();
-            });
-    }
+        function decrease(id){
+            fetch("/cart/decrease", {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/x-www-form-urlencoded"
+                },
+                body: "id=" + id
+            })
+                .then(res => res.text())
+                .then(total => {
+                    document.getElementById("total").innerText = total;
+                    location.reload();
+                });
+        }
 
-    function removeItem(id){
-        fetch("/cart/remove", {
-            method: "POST",
-            headers: {
-                "Content-Type":"application/x-www-form-urlencoded"
-            },
-            body: "id=" + id
-        })
-            .then(res => res.text())
-            .then(total => {
-                document.getElementById("total").innerText = total;
-                location.reload();
-            });
-    }
-</script>
+        function removeItem(id){
+            fetch("/cart/remove", {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/x-www-form-urlencoded"
+                },
+                body: "id=" + id
+            })
+                .then(res => res.text())
+                .then(total => {
+                    document.getElementById("total").innerText = total;
+                    location.reload();
+                });
+        }
+    </script>
 </body>
 </html>

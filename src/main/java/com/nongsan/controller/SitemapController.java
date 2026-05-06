@@ -27,7 +27,7 @@ public class SitemapController {
         StringBuilder xml = new StringBuilder();
 
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        xml.append("<urlset xmlns=\"https://www.sitemaps.org/schemas/sitemap/0.9\">");
+        xml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 
         // Trang chủ
         xml.append("<url>");

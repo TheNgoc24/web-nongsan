@@ -17,7 +17,7 @@
           th:content="${product.description}" />
 
     <meta property="og:image"
-          th:content="@{'/images/' + ${product.image}}" />
+          th:content="${product.image}" />
 
     <link rel="canonical"
           th:href="@{'https://web-nongsan-production.up.railway.app/product/' + ${product.slug}}" />
@@ -154,7 +154,7 @@
         "@context": "https://schema.org/",
         "@type": "Product",
         "name": "[[${product.name}]]",
-        "image": "[[@{'/images/' + ${product.image}}]]",
+        "image": "[[${product.image}]]",
         "description": "[[${product.description}]]",
         "offers": {
             "@type": "Offer",
