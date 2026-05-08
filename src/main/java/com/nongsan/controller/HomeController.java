@@ -26,12 +26,6 @@ public class HomeController {
 
         Page<Product> productPage = repository.findAll(PageRequest.of(page, 8));
 
-        productPage.getContent().forEach(p -> {
-            if(p.getSlug() == null){
-                p.setSlug(toSlug(p.getName()));
-                repository.save(p);
-            }
-        });
 
         model.addAttribute("products", productPage.getContent());
         model.addAttribute("currentPage", page);

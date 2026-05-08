@@ -4,6 +4,12 @@
 <head>
     <title th:text="${product.name} + ' | Nông sản sạch Thái Nguyên'"></title>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:url"
+          th:content="@{'https://web-nongsan-production.up.railway.app/product/' + ${product.slug}}">
+
     <meta name="description"
           th:content="${product.description}" />
 

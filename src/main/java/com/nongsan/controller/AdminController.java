@@ -54,6 +54,8 @@ public class AdminController {
             @RequestParam double price,
             @RequestParam String description,
             @RequestParam String image
+
+
     ){
 
         Product product = new Product();
@@ -63,6 +65,9 @@ public class AdminController {
         product.setDescription(description);
 
         product.setImage(image);
+        product.setSlug(
+                toSlug(name)
+        );
 
         repository.save(product);
 
@@ -121,6 +126,18 @@ public class AdminController {
         model.addAttribute("data", List.of(totalProducts, totalOrders, totalUsers));
 
         return "dashboard";
+    }
+    public String toSlug(String input) {
+        return input.toLowerCase()
+                .replaceAll("[àáạảãâầấậẩẫăằắặẳẵ]", "a")
+                .replaceAll("[èéẹẻẽêềếệểễ]", "e")
+                .replaceAll("[ìíịỉĩ]", "i")
+                .replaceAll("[òóọỏõôồốộổỗơờớợởỡ]", "o")
+                .replaceAll("[ùúụủũưừứựửữ]", "u")
+                .replaceAll("[ỳýỵỷỹ]", "y")
+                .replaceAll("đ", "d")
+                .replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("^-|-$", "");
     }
 
 }

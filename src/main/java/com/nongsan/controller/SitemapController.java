@@ -20,7 +20,7 @@ public class SitemapController {
     @ResponseBody
     public String sitemap(HttpServletRequest request) {
 
-        String baseUrl = request.getScheme() + "://" + request.getServerName();
+        String baseUrl = "https://web-nongsan-production.up.railway.app";
 
         List<Product> products = productRepository.findAll();
 
