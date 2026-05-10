@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://localhost:8080/sitemap.xml
+Sitemap: https://web-nongsan-production.up.railway.app/sitemap.xml
