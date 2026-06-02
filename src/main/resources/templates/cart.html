@@ -90,7 +90,7 @@
 
                 <div th:if="${cart.isEmpty()}">
                     <h5>Giỏ hàng trống 😢</h5>
-                    <a href="/" class="btn btn-primary mt-3">Mua ngay</a>
+                    <a href="/shop" class="btn btn-primary mt-3">Mua ngay</a>
                 </div>
 
                 <div th:each="item : ${cart}" class="cart-item">
@@ -149,7 +149,7 @@
                     </button>
                 </form>
 
-                <a href="/" class="btn btn-outline-primary w-100 mt-2">
+                <a href="/shop" class="btn btn-outline-primary w-100 mt-2">
                     Tiếp tục mua
                 </a>
 

@@ -21,8 +21,13 @@ public class HomeController {
         this.repository = repository;
     }
 
+    @GetMapping("/")
+    public String newsHome(){
+        return "posts";
+    }
+
     @GetMapping("/shop")
-    public String home(@RequestParam(defaultValue = "0") int page, Model model){
+    public String shop(@RequestParam(defaultValue = "0") int page, Model model){
         Page<Product> productPage = repository.findAll(PageRequest.of(page, 8));
 
         model.addAttribute("products", productPage.getContent());
@@ -30,10 +35,6 @@ public class HomeController {
         model.addAttribute("totalPages", productPage.getTotalPages());
 
         return "index";
-    }
-    @GetMapping("/")
-    public String newsHome(){
-        return "posts";
     }
 
     @GetMapping("/product/{slug}")
