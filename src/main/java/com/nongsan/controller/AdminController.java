@@ -63,7 +63,6 @@ public class AdminController {
         product.setName(name);
         product.setPrice(price);
         product.setDescription(description);
-
         product.setImage(image);
         product.setSlug(
                 toSlug(name)
