@@ -32,6 +32,10 @@ public class AdminController {
 
         model.addAttribute("products", repository.findAll());
         model.addAttribute("totalOrders", orderRepository.count());
+        model.addAttribute("products", repository.findAll());
+        model.addAttribute("totalProducts", repository.count());
+        model.addAttribute("totalUsers", userRepository.count());
+        model.addAttribute("latestOrders", orderRepository.findAll());
 
         User user = (User) session.getAttribute("user");
         if(user == null){
@@ -42,9 +46,6 @@ public class AdminController {
             return "redirect:/";
         }
 
-        model.addAttribute("products", repository.findAll());
-        model.addAttribute("totalProducts", repository.count());
-        model.addAttribute("totalUsers", userRepository.count());
 
         double totalRevenue = orderRepository.findAll()
                 .stream()
