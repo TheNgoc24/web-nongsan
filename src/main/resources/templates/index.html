@@ -275,21 +275,6 @@
 
 </div>
 
-<!-- CATEGORY -->
-<div class="container mt-4">
-    <div class="row text-center">
-
-        <div class="col-md-3 category">
-            🥬 <h6>Rau củ</h6>
-        </div>
-
-
-        <div class="col-md-3 category">
-            🍎 <h6>Trái cây</h6>
-        </div>
-    </div>
-</div>
-
 <!-- PRODUCT -->
 <div class="container mt-5">
 
@@ -310,7 +295,7 @@
                     <h5 th:text="${product.name}"></h5>
 
                     <p class="text-danger fw-bold">
-                        <span th:text="${product.price + ' VNĐ'}"></span>
+                        <span th:text="${product.price + ' VNĐ' + ' /kg '}"></span>
                     </p>
 
                     <div class="d-flex gap-2">

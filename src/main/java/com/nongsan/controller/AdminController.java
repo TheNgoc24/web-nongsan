@@ -31,6 +31,7 @@ public class AdminController {
     public String adminPage(Model model, HttpSession session){
 
         model.addAttribute("products", repository.findAll());
+        model.addAttribute("totalOrders", orderRepository.count());
 
         User user = (User) session.getAttribute("user");
         if(user == null){
@@ -44,6 +45,13 @@ public class AdminController {
         model.addAttribute("products", repository.findAll());
         model.addAttribute("totalProducts", repository.count());
         model.addAttribute("totalUsers", userRepository.count());
+
+        double totalRevenue = orderRepository.findAll()
+                .stream()
+                .mapToDouble(o -> o.getTotal())
+                .sum();
+
+        model.addAttribute("totalRevenue", totalRevenue);
 
         return "admin";
     }
