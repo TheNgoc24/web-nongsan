@@ -67,10 +67,6 @@ public class HomeController {
 
         return "index";
     }
-    @GetMapping("/category")
-    public String category(){
-        return "category";
-    }
 
     @GetMapping("/posts")
     public String posts(){
