@@ -30,14 +30,8 @@ public class AdminController {
     @GetMapping
     public String adminPage(Model model, HttpSession session){
 
-        model.addAttribute("products", repository.findAll());
-        model.addAttribute("totalOrders", orderRepository.count());
-        model.addAttribute("products", repository.findAll());
-        model.addAttribute("totalProducts", repository.count());
-        model.addAttribute("totalUsers", userRepository.count());
-        model.addAttribute("latestOrders", orderRepository.findAll());
-
         User user = (User) session.getAttribute("user");
+
         if(user == null){
             return "redirect:/login";
         }
@@ -46,6 +40,18 @@ public class AdminController {
             return "redirect:/";
         }
 
+        List<User> users = userRepository.findAll()
+                .stream()
+                .filter(u -> !"ADMIN".equals(u.getRole()))
+                .toList();
+
+        model.addAttribute("products", repository.findAll());
+        model.addAttribute("users", users);
+
+        model.addAttribute("totalProducts", repository.count());
+        model.addAttribute("totalUsers", users.size());
+        model.addAttribute("totalOrders", orderRepository.count());
+        model.addAttribute("latestOrders", orderRepository.findAll());
 
         double totalRevenue = orderRepository.findAll()
                 .stream()
@@ -134,6 +140,28 @@ public class AdminController {
         model.addAttribute("data", List.of(totalProducts, totalOrders, totalUsers));
 
         return "dashboard";
+    }
+    @GetMapping("/delete-user/{id}")
+    public String deleteUser(@PathVariable Long id, HttpSession session){
+
+        User currentUser = (User) session.getAttribute("user");
+
+        if(currentUser == null){
+            return "redirect:/login";
+        }
+
+        if(!"ADMIN".equals(currentUser.getRole())){
+            return "redirect:/";
+        }
+
+        User userDelete = userRepository.findById(id).orElse(null);
+
+        // Không cho xóa tài khoản ADMIN
+        if(userDelete != null && !"ADMIN".equals(userDelete.getRole())){
+            userRepository.deleteById(id);
+        }
+
+        return "redirect:/admin";
     }
     public String toSlug(String input) {
         return input.toLowerCase()

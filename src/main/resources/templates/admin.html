@@ -122,6 +122,63 @@
 </div>
 <div class="container mt-4">
 
+  <div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+      Danh sách người dùng
+    </div>
+
+    <div class="card-body">
+
+      <table class="table table-bordered table-hover align-middle">
+
+        <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Tên đăng nhập</th>
+          <th>Vai trò</th>
+          <th>Hành động</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="u : ${users}">
+          <td th:text="${u.id}"></td>
+
+          <td th:text="${u.username}"></td>
+
+          <td>
+            <span class="badge bg-success" th:text="${u.role}"></span>
+          </td>
+
+          <td>
+            <a th:href="@{/admin/delete-user/{id}(id=${u.id})}"
+               onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')"
+               class="btn btn-danger btn-sm">
+              Xóa
+            </a>
+          </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(users)}">
+          <td colspan="4" class="text-center text-muted">
+            Chưa có người dùng nào
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="container mt-4">
+
   <div class="row">
 
     <!-- BẢNG ĐƠN HÀNG -->
