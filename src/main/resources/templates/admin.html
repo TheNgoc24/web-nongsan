@@ -176,7 +176,123 @@
   </div>
 
 </div>
+<div class="container mt-4">
 
+  <div class="card shadow mb-4">
+
+    <div class="card-header bg-success text-white">
+      Quản lý bài viết giới thiệu nông sản và tin tức
+    </div>
+
+    <div class="card-body">
+
+      <h5>Thêm bài viết mới</h5>
+
+      <form action="/admin/save-post" method="post">
+
+        <input name="title"
+               class="form-control mb-2"
+               placeholder="Tiêu đề bài viết"
+               required>
+
+        <input name="image"
+               class="form-control mb-2"
+               placeholder="Link ảnh bài viết"
+               required>
+
+        <select name="category" class="form-control mb-2">
+          <option value="Giới thiệu nông sản">Giới thiệu nông sản</option>
+          <option value="Tin tức nông sản">Tin tức nông sản</option>
+          <option value="Đặc sản Thái Nguyên">Đặc sản Thái Nguyên</option>
+          <option value="Kiến thức tiêu dùng">Kiến thức tiêu dùng</option>
+        </select>
+
+        <textarea name="content"
+                  class="form-control mb-2"
+                  rows="6"
+                  placeholder="Nội dung bài viết"
+                  required></textarea>
+
+        <button class="btn btn-success w-100">
+          Lưu bài viết
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <div class="card shadow mb-4">
+
+    <div class="card-header bg-primary text-white">
+      Danh sách bài viết
+    </div>
+
+    <div class="card-body">
+
+      <table class="table table-bordered table-hover align-middle">
+
+        <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Ảnh</th>
+          <th>Tiêu đề</th>
+          <th>Danh mục</th>
+          <th>Ngày tạo</th>
+          <th>Hành động</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="p : ${posts}">
+          <td th:text="${p.id}"></td>
+
+          <td>
+            <img th:src="${p.image}"
+                 width="70"
+                 height="60"
+                 style="object-fit:cover; border-radius:8px;">
+          </td>
+
+          <td th:text="${p.title}"></td>
+
+          <td>
+            <span class="badge bg-success" th:text="${p.category}"></span>
+          </td>
+
+          <td th:text="${p.createdAt}"></td>
+
+          <td>
+            <a th:href="@{/admin/edit-post/{id}(id=${p.id})}"
+               class="btn btn-warning btn-sm">
+              Sửa
+            </a>
+
+            <a th:href="@{/admin/delete-post/{id}(id=${p.id})}"
+               onclick="return confirm('Bạn có chắc muốn xóa bài viết này không?')"
+               class="btn btn-danger btn-sm">
+              Xóa
+            </a>
+          </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(posts)}">
+          <td colspan="6" class="text-center text-muted">
+            Chưa có bài viết nào
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
 <div class="container mt-4">
 
   <div class="row">

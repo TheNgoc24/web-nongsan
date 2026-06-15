@@ -1,6 +1,7 @@
 package com.nongsan.controller;
 
 import com.nongsan.entity.Product;
+import com.nongsan.repository.PostRepository;
 import com.nongsan.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,18 +17,24 @@ import java.util.List;
 public class HomeController {
 
     private final ProductRepository repository;
+    private final PostRepository postRepository;
 
-    public HomeController(ProductRepository repository) {
+    public HomeController(ProductRepository repository, PostRepository postRepository) {
         this.repository = repository;
+        this.postRepository = postRepository;
     }
 
     @GetMapping("/")
-    public String newsHome(){
+    public String newsHome(Model model) {
+
+        model.addAttribute("posts", postRepository.findAllByOrderByCreatedAtDesc());
+
         return "posts";
     }
 
     @GetMapping("/shop")
-    public String shop(@RequestParam(defaultValue = "0") int page, Model model){
+    public String shop(@RequestParam(defaultValue = "0") int page, Model model) {
+
         Page<Product> productPage = repository.findAll(PageRequest.of(page, 8));
 
         model.addAttribute("products", productPage.getContent());
@@ -42,7 +49,7 @@ public class HomeController {
 
         Product product = repository.findBySlug(slug);
 
-        if(product == null){
+        if (product == null) {
             return "redirect:/";
         }
 
@@ -50,15 +57,16 @@ public class HomeController {
 
         return "product";
     }
+
     @GetMapping("/search")
     public String search(@RequestParam(required = false) String keyword,
-                         Model model){
+                         Model model) {
 
         List<Product> products;
 
-        if(keyword == null || keyword.trim().isEmpty()){
+        if (keyword == null || keyword.trim().isEmpty()) {
             products = repository.findAll();
-        }else{
+        } else {
             products = repository.findByNameContainingIgnoreCase(keyword);
         }
 
@@ -69,8 +77,8 @@ public class HomeController {
     }
 
     @GetMapping("/posts")
-    public String posts(){
-        return "posts";
+    public String postsRedirect() {
+        return "redirect:/";
     }
 
     public String toSlug(String input) {

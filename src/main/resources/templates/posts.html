@@ -208,6 +208,35 @@
     <div class="row">
 
         <div class="col-md-8">
+            <div th:if="${posts != null and !#lists.isEmpty(posts)}">
+
+                <h3 class="mb-4 fw-bold text-success">
+                    Bài viết mới được cập nhật
+                </h3>
+
+                <article class="article-card" th:each="p : ${posts}">
+
+                    <img th:src="${p.image}"
+                         th:alt="${p.title}">
+
+                    <h2 th:text="${p.title}"></h2>
+
+                    <p>
+                        <span class="badge bg-success" th:text="${p.category}"></span>
+                        <span class="text-muted ms-2" th:text="${p.createdAt}"></span>
+                    </p>
+
+                    <p style="white-space: pre-line;"
+                       th:text="${p.content}">
+                    </p>
+
+                    <a href="/shop" class="btn btn-success">
+                        Xem sản phẩm liên quan
+                    </a>
+
+                </article>
+
+            </div>
 
             <article class="article-card">
                 <img src="https://images.unsplash.com/photo-1542838132-92c53300491e"

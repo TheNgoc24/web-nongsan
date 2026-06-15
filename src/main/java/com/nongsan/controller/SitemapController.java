@@ -29,17 +29,14 @@ public class SitemapController {
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         xml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">");
 
-        // Trang chủ
         xml.append("<url>");
         xml.append("<loc>").append(baseUrl).append("/</loc>");
         xml.append("</url>");
 
-        // Category
         xml.append("<url>");
-        xml.append("<loc>").append(baseUrl).append("/category</loc>");
+        xml.append("<loc>").append(baseUrl).append("/shop</loc>");
         xml.append("</url>");
 
-        // Product
         for (Product p : products) {
             xml.append("<url>");
             xml.append("<loc>")
