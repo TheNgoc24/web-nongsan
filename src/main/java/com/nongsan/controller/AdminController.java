@@ -3,17 +3,24 @@ package com.nongsan.controller;
 import com.nongsan.entity.Post;
 import com.nongsan.entity.Product;
 import com.nongsan.entity.User;
+import com.nongsan.model.Order;
 import com.nongsan.repository.OrderRepository;
 import com.nongsan.repository.PostRepository;
 import com.nongsan.repository.ProductRepository;
 import com.nongsan.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -49,7 +56,11 @@ public class AdminController {
     }
 
     @GetMapping
-    public String adminPage(Model model, HttpSession session) {
+    public String adminPage(Model model,
+                            HttpSession session,
+                            @RequestParam(required = false) String orderName,
+                            @RequestParam(required = false)
+                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderDate) {
 
         String check = checkAdmin(session);
         if (check != null) {
@@ -61,6 +72,33 @@ public class AdminController {
                 .filter(u -> !"ADMIN".equals(u.getRole()))
                 .toList();
 
+        List<Order> allOrders = orderRepository.findAll();
+
+        List<Order> filteredOrders = allOrders.stream()
+                .filter(o -> orderName == null
+                        || orderName.trim().isEmpty()
+                        || (o.getName() != null
+                        && o.getName().toLowerCase().contains(orderName.toLowerCase())))
+                .filter(o -> orderDate == null
+                        || (o.getCreatedAt() != null
+                        && o.getCreatedAt().toLocalDate().equals(orderDate)))
+                .toList();
+
+        double totalRevenue = allOrders.stream()
+                .mapToDouble(Order::getTotal)
+                .sum();
+
+        Map<String, Double> revenueMap = new LinkedHashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+
+        allOrders.stream()
+                .filter(o -> o.getCreatedAt() != null)
+                .sorted((o1, o2) -> o1.getCreatedAt().compareTo(o2.getCreatedAt()))
+                .forEach(o -> {
+                    String date = o.getCreatedAt().toLocalDate().format(formatter);
+                    revenueMap.put(date, revenueMap.getOrDefault(date, 0.0) + o.getTotal());
+                });
+
         model.addAttribute("products", repository.findAll());
         model.addAttribute("users", users);
         model.addAttribute("posts", postRepository.findAllByOrderByCreatedAtDesc());
@@ -69,14 +107,15 @@ public class AdminController {
         model.addAttribute("totalUsers", users.size());
         model.addAttribute("totalOrders", orderRepository.count());
         model.addAttribute("totalPosts", postRepository.count());
-        model.addAttribute("latestOrders", orderRepository.findAll());
-
-        double totalRevenue = orderRepository.findAll()
-                .stream()
-                .mapToDouble(o -> o.getTotal())
-                .sum();
-
         model.addAttribute("totalRevenue", totalRevenue);
+
+        model.addAttribute("latestOrders", filteredOrders);
+
+        model.addAttribute("orderName", orderName);
+        model.addAttribute("orderDate", orderDate);
+
+        model.addAttribute("revenueLabels", new ArrayList<>(revenueMap.keySet()));
+        model.addAttribute("revenueData", new ArrayList<>(revenueMap.values()));
 
         return "admin";
     }
@@ -193,7 +232,7 @@ public class AdminController {
 
         double totalRevenue = orderRepository.findAll()
                 .stream()
-                .mapToDouble(o -> o.getTotal())
+                .mapToDouble(Order::getTotal)
                 .sum();
 
         model.addAttribute("products", totalProducts);

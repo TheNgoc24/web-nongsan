@@ -301,13 +301,42 @@
     <div class="col-md-7">
       <div class="card p-3 shadow h-100">
 
-        <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="d-flex justify-content-between align-items-center mb-3">
           <h5>Đơn hàng mới</h5>
 
           <a href="/admin/orders" class="btn btn-primary btn-sm">
             Xem tất cả
           </a>
         </div>
+
+        <form action="/admin" method="get" class="row g-2 mb-3">
+
+          <div class="col-md-5">
+            <input type="text"
+                   name="orderName"
+                   class="form-control"
+                   placeholder="Tìm theo tên khách hàng"
+                   th:value="${orderName}">
+          </div>
+
+          <div class="col-md-4">
+            <input type="date"
+                   name="orderDate"
+                   class="form-control"
+                   th:value="${orderDate}">
+          </div>
+
+          <div class="col-md-3 d-flex gap-2">
+            <button class="btn btn-success w-100">
+              Lọc
+            </button>
+
+            <a href="/admin" class="btn btn-secondary">
+              Xóa
+            </a>
+          </div>
+
+        </form>
 
         <table class="table table-bordered table-hover align-middle">
 
@@ -323,6 +352,7 @@
           </thead>
 
           <tbody>
+
           <tr th:each="o : ${latestOrders}">
             <td th:text="${o.id}"></td>
             <td th:text="${o.name}"></td>
@@ -333,6 +363,13 @@
 
             <td th:text="${o.createdAt}"></td>
           </tr>
+
+          <tr th:if="${#lists.isEmpty(latestOrders)}">
+            <td colspan="6" class="text-center text-muted">
+              Không tìm thấy đơn hàng phù hợp
+            </td>
+          </tr>
+
           </tbody>
 
         </table>
@@ -340,13 +377,18 @@
       </div>
     </div>
 
-    <!-- BIỂU ĐỒ -->
-    <div class="col-md-5" >
-      <div class="card p-3 shadow h-100" >
+    <!-- BIỂU ĐỒ DOANH THU -->
+    <div class="col-md-5">
+      <div class="card p-3 shadow h-100">
 
-        <h5 class="text-center">Biểu đồ thống kê</h5>
+        <h5 class="text-center">Biểu đồ doanh thu theo ngày</h5>
 
-        <canvas id="myChart" height="180"></canvas>
+        <h6 class="text-center text-danger mb-3">
+          Tổng doanh thu:
+          <span th:text="${#numbers.formatDecimal(totalRevenue,0,'COMMA',0,'POINT')} + ' VNĐ'"></span>
+        </h6>
+
+        <canvas id="myChart" height="220"></canvas>
 
       </div>
     </div>
@@ -354,28 +396,56 @@
   </div>
 
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script th:inline="javascript">
 
-  const totalProducts = /*[[${totalProducts}]]*/ 0;
-  const totalUsers = /*[[${totalUsers}]]*/ 0;
-  const totalOrders = /*[[${totalOrders}]]*/ 0;
+  const revenueLabels = /*[[${revenueLabels}]]*/ [];
+  const revenueData = /*[[${revenueData}]]*/ [];
 
   const ctx = document.getElementById('myChart');
 
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Sản phẩm', 'Người dùng', 'Đơn hàng'],
-datasets: [{
-  label: 'Thống kê',
-  data: [totalProducts, totalUsers, totalOrders]
-}]
+      labels: revenueLabels,
+      datasets: [{
+        label: 'Doanh thu theo ngày (VNĐ)',
+        data: revenueData,
+        backgroundColor: 'rgba(40, 167, 69, 0.7)',
+        borderColor: 'rgba(40, 167, 69, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.raw.toLocaleString('vi-VN') + ' VNĐ';
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function(value) {
+              return value.toLocaleString('vi-VN') + ' VNĐ';
+            }
+          }
+        }
+      }
     }
   });
 
 </script>
-</body>
 
+</body>
 </html>
