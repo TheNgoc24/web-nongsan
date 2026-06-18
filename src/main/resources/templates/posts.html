@@ -57,6 +57,38 @@
             font-weight:700;
         }
 
+
+        .user-area{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            flex-wrap:nowrap;
+            margin-left:auto;
+            position:relative;
+        }
+
+        .user-area .dropdown{
+            position:relative;
+        }
+
+        .user-area .dropdown button{
+            white-space:nowrap;
+        }
+
+        .user-area .dropdown-menu{
+            z-index:9999;
+            border:none;
+            border-radius:16px;
+            padding:10px;
+            box-shadow:0 15px 35px rgba(0,0,0,.18);
+        }
+
+        .user-area .dropdown-item{
+            border-radius:10px;
+            font-weight:600;
+            padding:9px 12px;
+        }
+
         .hero{
             min-height:520px;
             background:
@@ -359,7 +391,39 @@
         }
 
         @media(max-width:992px){
-            .hero{
+
+        .user-area{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            flex-wrap:nowrap;
+            margin-left:auto;
+            position:relative;
+        }
+
+        .user-area .dropdown{
+            position:relative;
+        }
+
+        .user-area .dropdown button{
+            white-space:nowrap;
+        }
+
+        .user-area .dropdown-menu{
+            z-index:9999;
+            border:none;
+            border-radius:16px;
+            padding:10px;
+            box-shadow:0 15px 35px rgba(0,0,0,.18);
+        }
+
+        .user-area .dropdown-item{
+            border-radius:10px;
+            font-weight:600;
+            padding:9px 12px;
+        }
+
+        .hero{
                 min-height:460px;
             }
 
@@ -382,7 +446,39 @@
                 background:#f7faf3;
             }
 
-            .hero{
+
+        .user-area{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            flex-wrap:nowrap;
+            margin-left:auto;
+            position:relative;
+        }
+
+        .user-area .dropdown{
+            position:relative;
+        }
+
+        .user-area .dropdown button{
+            white-space:nowrap;
+        }
+
+        .user-area .dropdown-menu{
+            z-index:9999;
+            border:none;
+            border-radius:16px;
+            padding:10px;
+            box-shadow:0 15px 35px rgba(0,0,0,.18);
+        }
+
+        .user-area .dropdown-item{
+            border-radius:10px;
+            font-weight:600;
+            padding:9px 12px;
+        }
+
+        .hero{
                 min-height:420px;
                 text-align:left;
             }
@@ -449,7 +545,7 @@
 
             </ul>
 
-            <div class="d-flex gap-2">
+            <div class="user-area">
 
                 <div th:if="${session.user == null}">
                     <a href="/login" class="btn btn-outline-light btn-sm">Đăng nhập</a>
@@ -458,7 +554,9 @@
 
                 <div th:if="${session.user != null}" class="dropdown">
                     <button class="btn btn-light btn-sm dropdown-toggle"
-                            data-bs-toggle="dropdown">
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
                         👤 <span th:text="${session.user.username}"></span>
                     </button>
 
@@ -586,30 +684,30 @@
                     vò chè và bảo quản đều ảnh hưởng trực tiếp đến màu nước, hương thơm và vị trà.
                 </p>
 
-            <a href="/shop" class="btn btn-success mt-2">
-                Xem sản phẩm
-            </a>
+                <a href="/shop" class="btn btn-success mt-2">
+                    Xem sản phẩm
+                </a>
 
             </article>
-                <article class="article-card">
+            <article class="article-card">
 
-                    <img src="https://i.postimg.cc/bvSt3ZPC/tai-xuong-(2).jpg"
-                         alt="Xoài Việt Nam">
+                <img src="https://i.postimg.cc/bvSt3ZPC/tai-xuong-(2).jpg"
+                     alt="Xoài Việt Nam">
 
-                    <h2>Xoài Việt Nam tiếp tục được người tiêu dùng ưa chuộng nhờ chất lượng và hương vị đặc trưng</h2>
+                <h2>Xoài Việt Nam tiếp tục được người tiêu dùng ưa chuộng nhờ chất lượng và hương vị đặc trưng</h2>
 
-                    <p>
-                        Xoài là một trong những loại trái cây nhiệt đới được yêu thích nhất tại Việt Nam. Với hương thơm tự nhiên, vị ngọt thanh và giá trị dinh dưỡng cao, xoài luôn nằm trong nhóm nông sản có sản lượng tiêu thụ lớn trên thị trường. Nhiều địa phương như Đồng Tháp, Tiền Giang, An Giang và Sơn La đang tập trung phát triển các vùng trồng xoài theo hướng an toàn, nâng cao chất lượng sản phẩm và mở rộng thị trường tiêu thụ.
-                        Theo các nhà vườn, mùa xoài năm nay có chất lượng khá tốt nhờ điều kiện thời tiết thuận lợi. Các giống xoài nổi tiếng như xoài Cát Hòa Lộc, xoài Cát Chu và xoài Keo đều đạt năng suất ổn định, mẫu mã đẹp và hương vị thơm ngon. Nhờ áp dụng các kỹ thuật canh tác hiện đại, nhiều vùng trồng đã giảm đáng kể việc sử dụng thuốc bảo vệ thực vật, góp phần nâng cao chất lượng và độ an toàn của sản phẩm.
-                        Không chỉ được tiêu thụ trong nước, xoài Việt Nam còn được xuất khẩu sang nhiều thị trường quốc tế. Đây là tín hiệu tích cực cho ngành nông nghiệp, đồng thời khẳng định vị thế của trái cây Việt Nam trên thị trường toàn cầu. Các doanh nghiệp và hợp tác xã đang tích cực đầu tư vào khâu đóng gói, bảo quản và truy xuất nguồn gốc nhằm đáp ứng các yêu cầu ngày càng cao của người tiêu dùng.
-                        Bên cạnh hương vị hấp dẫn, xoài còn chứa nhiều vitamin và khoáng chất có lợi cho sức khỏe như vitamin A, vitamin C, chất xơ và các hợp chất chống oxy hóa tự nhiên. Việc bổ sung xoài vào thực đơn hằng ngày giúp tăng cường sức đề kháng, hỗ trợ hệ tiêu hóa và cung cấp năng lượng cho cơ thể.
-                        Trong thời gian tới, việc phát triển các sản phẩm xoài sạch, có nguồn gốc rõ ràng và ứng dụng công nghệ trong sản xuất được kỳ vọng sẽ giúp nâng cao giá trị nông sản Việt Nam. Đồng thời, đây cũng là cơ hội để quảng bá hình ảnh nông nghiệp hiện đại, bền vững và thân thiện với môi trường đến với người tiêu dùng trong và ngoài nước.
-                    </p>
+                <p>
+                    Xoài là một trong những loại trái cây nhiệt đới được yêu thích nhất tại Việt Nam. Với hương thơm tự nhiên, vị ngọt thanh và giá trị dinh dưỡng cao, xoài luôn nằm trong nhóm nông sản có sản lượng tiêu thụ lớn trên thị trường. Nhiều địa phương như Đồng Tháp, Tiền Giang, An Giang và Sơn La đang tập trung phát triển các vùng trồng xoài theo hướng an toàn, nâng cao chất lượng sản phẩm và mở rộng thị trường tiêu thụ.
+                    Theo các nhà vườn, mùa xoài năm nay có chất lượng khá tốt nhờ điều kiện thời tiết thuận lợi. Các giống xoài nổi tiếng như xoài Cát Hòa Lộc, xoài Cát Chu và xoài Keo đều đạt năng suất ổn định, mẫu mã đẹp và hương vị thơm ngon. Nhờ áp dụng các kỹ thuật canh tác hiện đại, nhiều vùng trồng đã giảm đáng kể việc sử dụng thuốc bảo vệ thực vật, góp phần nâng cao chất lượng và độ an toàn của sản phẩm.
+                    Không chỉ được tiêu thụ trong nước, xoài Việt Nam còn được xuất khẩu sang nhiều thị trường quốc tế. Đây là tín hiệu tích cực cho ngành nông nghiệp, đồng thời khẳng định vị thế của trái cây Việt Nam trên thị trường toàn cầu. Các doanh nghiệp và hợp tác xã đang tích cực đầu tư vào khâu đóng gói, bảo quản và truy xuất nguồn gốc nhằm đáp ứng các yêu cầu ngày càng cao của người tiêu dùng.
+                    Bên cạnh hương vị hấp dẫn, xoài còn chứa nhiều vitamin và khoáng chất có lợi cho sức khỏe như vitamin A, vitamin C, chất xơ và các hợp chất chống oxy hóa tự nhiên. Việc bổ sung xoài vào thực đơn hằng ngày giúp tăng cường sức đề kháng, hỗ trợ hệ tiêu hóa và cung cấp năng lượng cho cơ thể.
+                    Trong thời gian tới, việc phát triển các sản phẩm xoài sạch, có nguồn gốc rõ ràng và ứng dụng công nghệ trong sản xuất được kỳ vọng sẽ giúp nâng cao giá trị nông sản Việt Nam. Đồng thời, đây cũng là cơ hội để quảng bá hình ảnh nông nghiệp hiện đại, bền vững và thân thiện với môi trường đến với người tiêu dùng trong và ngoài nước.
+                </p>
 
-                    <a href="/shop" class="btn btn-success">
-                        Xem sản phẩm xoài
-                    </a>
-                </article>
+                <a href="/shop" class="btn btn-success">
+                    Xem sản phẩm xoài
+                </a>
+            </article>
 
             <article class="article-card">
 
