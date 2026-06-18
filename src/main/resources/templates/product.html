@@ -2,152 +2,804 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${product.name} + ' | Nông sản sạch Thái Nguyên'">Chi tiết sản phẩm</title>
 
-    <meta name="description" th:content="${product.description}">
-    <meta name="keywords" content="nông sản sạch, đặc sản Thái Nguyên, thực phẩm sạch">
+    <title>Nông Sản Thái Nguyên</title>
+
+    <meta name="google-site-verification" content="5wylKTPPJ3a435WcVuivOjLreMHYJK_og4-suP1D7OE" />
+
+    <meta name="description"
+          content="Cung cấp nông sản sạch tại Thái Nguyên, rau sạch, trái cây sạch, giao hàng tận nơi">
+
+    <meta name="keywords"
+          content="nông sản, rau sạch, thực phẩm sạch, Thái Nguyên">
+
+    <meta property="og:title"
+          content="Nông Sản Thái Nguyên">
+
+    <meta property="og:description"
+          content="Nông sản sạch giao tận nơi">
+
+    <meta property="og:image"
+          content="https://images.unsplash.com/photo-1542838132-92c53300491e">
+
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" th:content="${product.name}">
-    <meta property="og:description" th:content="${product.description}">
-    <meta property="og:image" th:content="${product.image}">
-
     <link rel="canonical"
-          th:href="@{'https://web-nongsan-production.up.railway.app/product/' + ${product.slug}}">
+          href="https://web-nongsan-production.up.railway.app/">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            margin:0;
+            font-family:'Be Vietnam Pro', Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(67,160,71,.16), transparent 32%),
+                linear-gradient(180deg,#f7faf3,#edf5ec);
+            color:#26382a;
+        }
+
+        .navbar{
+            background:linear-gradient(90deg,#145a28,#23823a,#43a047) !important;
+        }
+
+        .navbar-brand{
+            font-weight:900;
+            letter-spacing:.2px;
+        }
+
+        .nav-link{
+            font-weight:700;
+            color:rgba(255,255,255,.9) !important;
+        }
+
+        .nav-link:hover,
+        .nav-link.active{
+            color:#fff7d8 !important;
+        }
+
+        .search-box{
+            background:rgba(255,255,255,.14);
+            padding:6px;
+            border-radius:999px;
+            border:1px solid rgba(255,255,255,.22);
+        }
+
+        .search-box input{
+            border:none;
+            border-radius:999px;
+            min-width:230px;
+        }
+
+        .search-box input:focus{
+            box-shadow:none;
+        }
+
+        .search-box button{
+            border-radius:999px;
+            font-weight:800;
+            padding-left:18px;
+            padding-right:18px;
+        }
+
+        .nav-btn{
+            border-radius:999px;
+            font-weight:800;
+        }
+
+        .cart-btn{
+            border-radius:999px;
+            font-weight:900;
+            box-shadow:0 8px 18px rgba(0,0,0,.15);
+        }
+
+        .carousel{
+            position:relative;
+            overflow:hidden;
+        }
+
+        .carousel-item{
+            height:520px;
+            transition:transform 0.8s ease-in-out;
+        }
+
+        .carousel-item img{
+            height:520px;
+            width:100%;
+            object-fit:cover;
+            filter:brightness(.72);
+            transition:transform 4s ease;
+        }
+
+        .carousel-item.active img{
+            transform:scale(1.06);
+        }
+
+        .carousel-caption{
+            left:9%;
+            right:auto;
+            bottom:90px;
+            text-align:left;
+            max-width:680px;
+            background:rgba(20,90,40,.60);
+            border:1px solid rgba(255,255,255,.25);
+            backdrop-filter:blur(10px);
+            padding:32px;
+            border-radius:26px;
+            box-shadow:0 18px 45px rgba(0,0,0,.22);
+        }
+
+        .carousel-caption .badge-soft{
+            display:inline-block;
+            background:rgba(255,255,255,.18);
+            border:1px solid rgba(255,255,255,.32);
+            padding:8px 15px;
+            border-radius:999px;
+            font-size:13px;
+            font-weight:800;
+            margin-bottom:14px;
+        }
+
+        .carousel-caption h2{
+            font-weight:900;
+            font-size:44px;
+            line-height:1.18;
+            margin-bottom:12px;
+        }
+
+        .carousel-caption p{
+            font-size:17px;
+            line-height:1.8;
+            color:#f0fff0;
+            margin-bottom:22px;
+        }
+
+        .hero-btn{
+            border-radius:999px;
+            padding:12px 24px;
+            font-weight:900;
+            background:linear-gradient(90deg,#f5b642,#ffcf66);
+            border:none;
+            color:#26351f;
+        }
+
+        .hero-btn:hover{
+            background:linear-gradient(90deg,#e9a72f,#ffc14c);
+            color:#26351f;
+            transform:translateY(-2px);
+        }
+
+        .carousel-indicators [data-bs-target]{
+            width:12px;
+            height:12px;
+            border-radius:50%;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon{
+            background-color:rgba(0,0,0,0.45);
+            border-radius:50%;
+            padding:18px;
+        }
+
+        .intro-strip{
+            margin-top:-42px;
+            position:relative;
+            z-index:5;
+        }
+
+        .intro-card{
+            background:white;
+            border-radius:24px;
+            padding:24px;
+            box-shadow:0 18px 45px rgba(30,87,43,.12);
+            border:1px solid rgba(35,130,58,.10);
+            height:100%;
+        }
+
+        .intro-card strong{
+            display:block;
+            color:#1f7a38;
+            font-size:17px;
+            font-weight:900;
+            margin-bottom:6px;
+        }
+
+        .intro-card span{
+            color:#657166;
+            font-size:14px;
+            line-height:1.7;
+        }
+
+        .section-heading{
+            text-align:center;
+            margin-bottom:36px;
+        }
+
+        .section-heading .small-title{
+            display:inline-block;
+            background:#e8f6eb;
+            color:#1f7a38;
+            border:1px solid #c8e8cf;
+            padding:8px 16px;
+            border-radius:999px;
+            font-size:13px;
+            font-weight:900;
+            margin-bottom:14px;
+        }
+
+        .section-heading h2{
+            color:#1f4f2b;
+            font-weight:900;
+            font-size:36px;
+            margin-bottom:10px;
+        }
+
+        .section-heading p{
+            color:#667266;
+            max-width:720px;
+            margin:0 auto;
+            line-height:1.8;
+        }
+
+        .product-card{
+            border:none;
+            border-radius:26px;
+            overflow:hidden;
+            background:white;
+            box-shadow:0 16px 40px rgba(30,87,43,.10);
+            border:1px solid rgba(35,130,58,.10);
+            transition:.28s ease;
+            height:100%;
+            position:relative;
+        }
+
+        .product-card:hover{
+            transform:translateY(-8px);
+            box-shadow:0 24px 58px rgba(30,87,43,.16);
+        }
+
+        .product-img-wrap{
+            position:relative;
+            overflow:hidden;
+            height:235px;
+        }
+
+        .product-img-wrap img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            transition:.35s ease;
+        }
+
+        .product-card:hover .product-img-wrap img{
+            transform:scale(1.06);
+        }
+
+        .product-label{
+            position:absolute;
+            top:14px;
+            left:14px;
+            background:rgba(255,255,255,.92);
+            color:#1f7a38;
+            border-radius:999px;
+            padding:7px 12px;
+            font-size:12px;
+            font-weight:900;
+            box-shadow:0 8px 20px rgba(0,0,0,.12);
+        }
+
+        .product-body{
+            padding:20px;
+        }
+
+        .product-name{
+            font-size:18px;
+            font-weight:900;
+            color:#26392a;
+            min-height:48px;
+            margin-bottom:12px;
+            line-height:1.35;
+        }
+
+        .product-desc-mini{
+            color:#78847a;
+            font-size:13px;
+            line-height:1.6;
+            margin-bottom:14px;
+        }
+
+        .product-price{
+            color:#e85d2a;
+            font-size:21px;
+            font-weight:900;
+            margin-bottom:16px;
+        }
+
+        .product-price small{
+            color:#7b887d;
+            font-size:13px;
+            font-weight:700;
+        }
+
+        .btn-view{
+            background:linear-gradient(90deg,#23823a,#43b95d);
+            color:white;
+            border:none;
+            border-radius:999px;
+            font-weight:900;
+            padding:10px 14px;
+        }
+
+        .btn-view:hover{
+            background:linear-gradient(90deg,#1d7131,#35a94e);
+            color:white;
+        }
+
+        .btn-buy{
+            background:linear-gradient(90deg,#f5b642,#ffcf66);
+            color:#26351f;
+            border:none;
+            border-radius:999px;
+            font-weight:900;
+            padding:10px 14px;
+        }
+
+        .btn-buy:hover{
+            background:linear-gradient(90deg,#e9a72f,#ffc14c);
+            color:#26351f;
+        }
+
+        .pagination-box{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:14px;
+            margin-top:34px;
+        }
+
+        .pagination-box .btn{
+            border-radius:999px;
+            font-weight:800;
+            padding:10px 22px;
+        }
+
+        .page-status{
+            background:white;
+            border:1px solid #dceee0;
+            border-radius:999px;
+            padding:10px 18px;
+            color:#1f7a38;
+            font-weight:900;
+            box-shadow:0 10px 25px rgba(30,87,43,.08);
+        }
+
+        footer{
+            background:
+                linear-gradient(120deg,#12351d,#1f6f34);
+            color:white;
+            text-align:center;
+            padding:48px 20px;
+            margin-top:60px;
+            position:relative;
+            overflow:hidden;
+        }
+
+        footer::before{
+            content:"";
+            position:absolute;
+            width:260px;
+            height:260px;
+            border-radius:50%;
+            background:rgba(255,255,255,.08);
+            left:-80px;
+            top:-100px;
+        }
+
+        footer h5{
+            font-weight:900;
+            margin-bottom:10px;
+            position:relative;
+            z-index:2;
+        }
+
+        footer p{
+            margin:0;
+            color:#e7f7e8;
+            position:relative;
+            z-index:2;
+        }
+
+        .toast{
+            border-radius:18px;
+            overflow:hidden;
+            box-shadow:0 16px 35px rgba(0,0,0,.18);
+        }
+
+        @media(max-width:992px){
+            .search-box{
+                margin:12px 0;
+                width:100%;
+            }
+
+            .search-box input{
+                min-width:0;
+            }
+
+            .carousel-item,
+            .carousel-item img{
+                height:460px;
+            }
+
+            .carousel-caption{
+                left:5%;
+                right:5%;
+                bottom:55px;
+                max-width:none;
+            }
+
+            .carousel-caption h2{
+                font-size:34px;
+            }
+
+            .intro-strip{
+                margin-top:28px;
+            }
+        }
+
+        @media(max-width:576px){
+            .carousel-item,
+            .carousel-item img{
+                height:430px;
+            }
+
+            .carousel-caption{
+                padding:22px;
+                bottom:45px;
+            }
+
+            .carousel-caption h2{
+                font-size:28px;
+            }
+
+            .carousel-caption p{
+                font-size:14px;
+            }
+
+            .section-heading h2{
+                font-size:28px;
+            }
+
+            .product-img-wrap{
+                height:220px;
+            }
+        }
+    </style>
 </head>
 
-<body style="background:#f5f5f5;">
+<body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow">
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="/">🌿 Nông Sản Thái Nguyên</a>
 
-        <div class="ms-auto d-flex gap-2">
-            <a href="/" class="btn btn-outline-light btn-sm">Tin tức</a>
-            <a href="/shop" class="btn btn-light btn-sm">Mua hàng</a>
-            <a href="/cart" class="btn btn-warning btn-sm">
-                🛒 Giỏ hàng <span class="badge bg-danger" th:text="${count}">0</span>
-            </a>
+        <a class="navbar-brand" href="/">
+            🥬 Nông Sản Thái Nguyên
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <ul class="navbar-nav me-auto ms-lg-4">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Tin tức</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/shop">Sản phẩm</a>
+                </li>
+
+            </ul>
+
+            <form class="d-flex me-lg-3 search-box" action="/search" method="get">
+                <input class="form-control me-2"
+                       name="keyword"
+                       placeholder="Tìm sản phẩm sạch...">
+
+                <button class="btn btn-light" type="submit">
+                    Tìm
+                </button>
+            </form>
+
+            <div class="d-flex align-items-center gap-2">
+
+                <a href="/cart" class="btn btn-warning cart-btn position-relative">
+                    🛒
+                    <span class="position-absolute top-0 start-100 translate-middle badge bg-danger"
+                          th:text="${count}">0</span>
+                </a>
+
+                <div th:if="${session.user == null}">
+                    <a href="/login" class="btn btn-outline-light nav-btn">
+                        Đăng nhập
+                    </a>
+                </div>
+
+                <div th:if="${session.user != null}" class="dropdown">
+                    <button class="btn btn-light dropdown-toggle nav-btn"
+                            data-bs-toggle="dropdown">
+                        👤 <span th:text="${session.user.username}"></span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/cart">Giỏ hàng</a></li>
+                        <li><a class="dropdown-item" href="/checkout">Thanh toán</a></li>
+
+                        <li th:if="${session.user != null and session.user.role == 'ADMIN'}">
+                            <a class="dropdown-item" href="/admin">Admin</a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item text-danger" href="/logout">
+                                Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
         </div>
+
     </div>
 </nav>
 
-<div class="container mt-5 mb-5">
+<div id="slider" class="carousel slide" data-bs-ride="carousel">
 
-    <div class="card shadow border-0 rounded-4 p-4">
-        <div class="row g-4">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#slider" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#slider" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#slider" data-bs-slide-to="2"></button>
+    </div>
 
-            <div class="col-md-5">
-                <img th:src="${product.image}"
-                     th:alt="${product.name}"
-                     class="img-fluid rounded-4 shadow-sm"
-                     style="width:100%; height:420px; object-fit:cover;">
+    <div class="carousel-inner">
 
-                <div class="mt-3 d-flex gap-2">
-                    <img th:src="${product.image}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;">
-                    <img th:src="${product.image}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;">
-                    <img th:src="${product.image}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;">
-                </div>
+        <div class="carousel-item active">
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e"
+                 class="d-block w-100"
+                 alt="Nông sản sạch">
+
+            <div class="carousel-caption">
+                <span class="badge-soft">🌿 Nông sản sạch mỗi ngày</span>
+
+                <h2>Thực phẩm sạch cho bữa ăn gia đình</h2>
+
+                <p>
+                    Cung cấp rau củ, trái cây, trà Thái Nguyên và đặc sản vùng miền
+                    với thông tin rõ ràng, dễ lựa chọn.
+                </p>
+
+                <a href="#products" class="btn hero-btn">
+                    Xem sản phẩm
+                </a>
             </div>
+        </div>
 
-            <div class="col-md-7">
-                <h2 class="fw-bold" th:text="${product.name}">Tên sản phẩm</h2>
+        <div class="carousel-item">
+            <img src="https://i.postimg.cc/PqxcBrz0/trangchu.jpg"
+                 class="d-block w-100"
+                 alt="Đặc sản Thái Nguyên">
 
-                <p class="text-muted mt-2">
-                    Nông sản sạch, nguồn gốc rõ ràng, phù hợp cho bữa ăn gia đình.
+            <div class="carousel-caption">
+                <span class="badge-soft">🍵 Đặc sản Thái Nguyên</span>
+
+                <h2>Quảng bá nông sản địa phương</h2>
+
+                <p>
+                    Website hỗ trợ giới thiệu sản phẩm, quản lý bán hàng và tối ưu nội dung SEO.
                 </p>
 
-                <div class="my-4">
-                    <span class="text-danger fw-bold"
-                          style="font-size:34px;"
-                          th:text="${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT')} + ' VNĐ'">
-                    </span>
-                </div>
+                <a href="/" class="btn hero-btn">
+                    Đọc tin tức
+                </a>
+            </div>
+        </div>
 
-                <hr>
+        <div class="carousel-item">
+            <img src="https://i.postimg.cc/FRPKhK2k/trangchu2.jpg"
+                 class="d-block w-100"
+                 alt="Mua nông sản online">
 
-                <h5 class="fw-bold">Mô tả sản phẩm</h5>
-                <p style="line-height:1.8;text-align:justify;"
-                   th:text="${product.description}">
+            <div class="carousel-caption">
+                <span class="badge-soft">🛒 Mua hàng nhanh chóng</span>
+
+                <h2>Dễ xem, dễ chọn, dễ đặt hàng</h2>
+
+                <p>
+                    Người dùng có thể xem chi tiết sản phẩm, thêm vào giỏ hàng và đặt mua trực tuyến.
                 </p>
 
-                <div class="alert alert-success mt-4">
-                    Cam kết sản phẩm sạch, giao hàng nhanh, hỗ trợ đổi trả nếu sản phẩm không đúng mô tả.
+                <a href="/cart" class="btn hero-btn">
+                    Xem giỏ hàng
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#slider" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+
+</div>
+
+<div class="container mt-5">
+
+    <div class="section-heading">
+        <span class="small-title">Sản phẩm nổi bật</span>
+
+        <h2 id="products">
+            Nông sản sạch
+        </h2>
+
+        <p>
+            Khám phá các sản phẩm nông sản sạch, đặc sản vùng miền và thực phẩm an toàn
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6" th:each="product : ${products}">
+
+            <div class="product-card">
+
+                <div class="product-img-wrap">
+                    <img th:src="${product.image}"
+                         th:alt="${product.name}">
+
+                    <div class="product-label">
+                        Sản phẩm sạch
+                    </div>
                 </div>
 
-                <div class="mt-4 d-flex gap-3">
-                    <button class="btn btn-warning btn-lg px-4"
-                            th:data-id="${product.id}"
-                            onclick="addToCart(this)">
-                        🛒 Thêm vào giỏ
-                    </button>
+                <div class="product-body">
 
-                    <button class="btn btn-success btn-lg px-4"
-                            th:data-id="${product.id}"
-                            onclick="buyNow(this)">
-                        Mua ngay
-                    </button>
+                    <div class="product-name"
+                         th:text="${product.name}">
+                        Tên sản phẩm
+                    </div>
+
+                    <div class="product-desc-mini">
+                        Nông sản sạch Thái Nguyên.
+                    </div>
+
+                    <div class="product-price">
+                        <span th:text="${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT')} + ' VNĐ'">
+                            0 VNĐ
+                        </span>
+                        <small>/ kg</small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a th:href="@{'/product/' + ${product.slug}}"
+                           class="btn btn-view w-100">
+                            Xem
+                        </a>
+
+                        <button class="btn btn-buy w-100 add-cart-btn"
+                                th:data-id="${product.id}">
+                            Mua
+                        </button>
+                    </div>
+
                 </div>
 
-                <div class="mt-4">
-                    <a href="/shop" class="btn btn-outline-secondary">
-                        ⬅ Quay lại mua hàng
-                    </a>
-                </div>
             </div>
 
         </div>
+
+    </div>
+
+    <div class="pagination-box"
+         th:if="${currentPage != null and totalPages != null and totalPages > 1}">
+
+        <a th:if="${currentPage > 0}"
+           th:href="@{/shop(page=${currentPage - 1})}"
+           class="btn btn-outline-success">
+            ← Trang trước
+        </a>
+
+        <span class="page-status"
+              th:text="|Trang ${currentPage + 1} / ${totalPages}|">
+        Trang 1 / 1
+    </span>
+
+        <a th:if="${currentPage < totalPages - 1}"
+           th:href="@{/shop(page=${currentPage + 1})}"
+           class="btn btn-outline-success">
+            Trang sau →
+        </a>
+
     </div>
 </div>
+
+<footer>
+    <h5>Nông Sản Thái Nguyên</h5>
+</footer>
 
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="toast" class="toast text-white bg-success border-0">
         <div class="toast-body">
-            ✔ Đã thêm vào giỏ hàng
+            ✔ Đã thêm sản phẩm vào giỏ hàng
         </div>
     </div>
 </div>
 
-<script type="application/ld+json" th:inline="javascript">
-    {
-        "@context": "https://schema.org/",
-        "@type": "Product",
-        "name": "[[${product.name}]]",
-        "image": "[[${product.image}]]",
-        "description": "[[${product.description}]]",
-        "offers": {
-            "@type": "Offer",
-            "price": "[[${product.price}]]",
-            "priceCurrency": "VND"
-        }
-    }
-</script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    function addToCart(btn){
-        let id = btn.getAttribute("data-id");
+    document.addEventListener("DOMContentLoaded", function(){
 
-        fetch('/cart/add/' + id)
-            .then(res => res.text())
-            .then(() => {
-                let toast = new bootstrap.Toast(document.getElementById('toast'));
-                toast.show();
+        document.querySelectorAll('.add-cart-btn').forEach(btn => {
+
+            btn.addEventListener('click', function(){
+
+                let id = this.getAttribute('data-id');
+
+                fetch('/cart/add/' + id)
+                    .then(res => res.text())
+                    .then(() => {
+
+                        this.innerText = "✔";
+                        this.classList.add("btn-dark");
+
+                        setTimeout(()=>{
+                            this.innerText = "Mua";
+                            this.classList.remove("btn-dark");
+                        },800);
+
+                        let toast = new bootstrap.Toast(document.getElementById('toast'));
+                        toast.show();
+
+                        let badge = document.querySelector('.cart-btn .badge');
+                        if(badge){
+                            badge.innerText = parseInt(badge.innerText) + 1;
+                        }
+
+                    });
+
             });
-    }
 
-    function buyNow(btn){
-        let id = btn.getAttribute("data-id");
+        });
 
-        fetch('/cart/add/' + id)
-            .then(res => res.text())
-            .then(() => {
-                window.location.href = "/checkout";
+        let myCarousel = document.querySelector('#slider');
+
+        if(myCarousel){
+            new bootstrap.Carousel(myCarousel, {
+                interval: 3500,
+                ride: 'carousel',
+                pause: false,
+                wrap: true
             });
-    }
+        }
+
+    });
 </script>
 
 </body>
